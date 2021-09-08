@@ -1,0 +1,6 @@
+github.com/JimmyZhangJW/biliStreamClient v0.2.1 h1:AjvSGhHVNFVipfF40dDYxQRjVkGYXYSrKkhsF9j08Lc=
+github.com/JimmyZhangJW/biliStreamClient v0.2.1/go.mod h1:AQNlTHiEBUgmub76IctvvK74J3LDwpFyjWJd3m62SU0=
+github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0Ufc=
+github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/tencentcloud/tencentcloud-sdk-go v1.0.103 h1:c+eyBAKq8oQFCrr01B3IV3be9SvJmkKpDORVHo49BIY=
+github.com/tencentcloud/tencentcloud-sdk-go v1.0.103/go.mod h1:asUz5BPXxgoPGaRgZaVm1iGcUAuHyYUo1nXqKa83cvI=
