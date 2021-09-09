@@ -1,3 +1,3 @@
 module 9-reflection
 
-go 1.15
+go 1.17

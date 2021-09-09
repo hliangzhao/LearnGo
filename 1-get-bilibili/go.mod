@@ -1,3 +1,3 @@
 module 1-get-bilibili
 
-go 1.15
+go 1.17

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option go_package = "github.com/hliangzhao/LearnGo/10-gRPC/route";
+
+package route;
+
+// 定义信息类型（数据）
+
+message Point {
+  int32 latitude = 1;       // 把一个数字作为key（json以字符串为key）
+  int32 longitude = 2;
+}
+
+message Rectangle {
+  Point lo = 1;
+  Point hi = 2;
+}
+
+message Feature {
+  string name = 1;
+  Point location = 2;
+}
+
+message RouteSummary {
+  int32 point_count = 1;
+  int32 distance = 2;
+  int32 elapsed_time = 3;
+}
+
+enum RecommendationMode {
+  GetFarthest = 0;
+  GetNearest = 1;
+}
+
+message RecommendationRequest {
+    RecommendationMode mode = 1;
+    Point point = 2;
+}
+
+// 定义服务（方法）
+
+service RouteGuide {
+  // Unary：输入为一个坐标点，返回这个点的特征
+  rpc GetFeature(Point) returns (Feature) {}
+
+  // Server-side streaming：输入为一个长方形区域，返回这个区域内所有点的特征
+  rpc ListFeatures(Rectangle) returns (stream Feature) {}
+
+  // Client-side streaming：输入为每个时间点的位置，返回RouteSummary
+  rpc RecordRoute(stream Point) returns (RouteSummary) {}
+
+  // Bidirectional streaming：输入流RecommendationRequest，返回特征
+  rpc Recommend(stream RecommendationRequest) returns (stream Feature) {}
+}

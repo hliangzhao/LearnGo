@@ -1,3 +1,3 @@
 module 5-concurrent-model
 
-go 1.15
+go 1.17

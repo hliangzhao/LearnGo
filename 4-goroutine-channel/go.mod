@@ -1,3 +1,3 @@
 module 4-goroutine-channel
 
-go 1.15
+go 1.17
