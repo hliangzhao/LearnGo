@@ -1,3 +1,3 @@
-module 9-reflection
+module github.com/hliangzhao/LearnGo/8-reflection
 
 go 1.17

@@ -3,9 +3,9 @@ package main
 import `fmt`
 
 func main() {
-	// 数组
-	arr := [5]string{"ok", "asd", "123", "f", "12321"}
-	arr2 := [...]string{"12321", "yes", "dsf"}           // 编译器自行计算长度
+	/* 数组 */
+	arr := [5]string{"ok", "asd", "123", "f", "12321"}          // 指定数组大小
+	arr2 := [...]string{"12321", "yes", "dsf"}                  // 编译器自行计算长度
 
 	for idx, value := range arr {
 		fmt.Println(idx, value)
@@ -18,21 +18,22 @@ func main() {
 	// deep copy，开辟了新的内存空间，将数据复制进去
 	arr3 := arr
 	arr3[0] = "abc"
-	fmt.Println(arr, arr3)
+	fmt.Println("arr:", arr, ", arr3:", arr3)
 
 
 
 
-	// 切片（切片是不指定大小的，是一种"动态数组"，可按需自动增长和缩小）
-	// 切片由一个地址指针和两个两个表示常熟和容量的整数组成
+	/* 切片 */
+	// 切片由一个首地址指针和两个表示长度和容量的整数组成
+	// 切片是不指定大小的，是一种"动态数组"，可按需自动增长和缩小
 	s := []string{"abc", "xyz"}
 	fmt.Println(len(s), cap(s))
 
 	// 使用make来创建数据类型（slice, map, channel）
 	s2 := make([]int, 2, 2)
 	fmt.Println(len(s2), cap(s2))
-	s2 = append(s2, 1)         // slice可以append
-	fmt.Println(s2, len(s2), cap(s2))      // 容量自动翻倍，无需用户操心
+	s2 = append(s2, 1)                  // slice可以append
+	fmt.Println(s2, len(s2), cap(s2))           // 容量自动翻倍，无需用户操心
 
 	ModifySlice(s2) // "传址"
 	fmt.Println(s2)
@@ -55,7 +56,7 @@ func main() {
 
 
 
-	// 映射
+	/* 映射 */
 	m := map[string]int {
 		"Julia":90,
 		"Mike": 100,
@@ -81,16 +82,19 @@ func main() {
 	fmt.Println(m)
 }
 
+// ModifyArray 参数传递形式：传值，即arr被copy了一份。因此原参不会被改变
 func ModifyArray(arr [5]string) {
 	// O(n)
 	arr[0] = "abc"
 }
 
+// ModifySlice 同样的写法，对于slice而言，则是传址
 func ModifySlice(s []int) {
 	// O(1)，传进来的只是slice首地址
 	s[0] = 100
 }
 
+// ModifyMap 同样的写法，对于map而言，也是传址
 func ModifyMap(m map[string]int) {
 	m["Narcissus"] = 98
 }

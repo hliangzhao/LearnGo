@@ -76,7 +76,7 @@ func (p *Pool) Close() {
 	}
 
 	p.closed = true
-	// 先关闭通道，不允许再向通道中添加资源，然后再以此关闭通道中的所有资源
+	// 先关闭通道，不允许再向通道中添加资源，然后再依次关闭通道中的所有资源
 	close(p.resources)
 	for resource := range p.resources {
 		resource.Close()

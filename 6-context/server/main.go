@@ -20,11 +20,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	go func() {
 		// really do handling...
 		time.Sleep(time.Second * 4)
-		complete <- struct{}{}
+		complete <- struct{}{}              // 创建一个空的struct的写法
 	}()
 
 	select {
 	case <- complete:
+		// Fprintf是将字符串写入一个writer中
 		_, err := fmt.Fprintf(w, "server handling finished.\n")
 		if err != nil {
 			log.Fatalln(err)

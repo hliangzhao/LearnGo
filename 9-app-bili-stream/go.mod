@@ -1,4 +1,4 @@
-module 9-app-bili-stream
+module github.com/hliangzhao/LearnGo/9-app-bili-stream
 
 go 1.17
 

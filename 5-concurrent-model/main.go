@@ -1,8 +1,9 @@
 package main
 
 import (
-	`5-concurrent-model/pool`
 	`fmt`
+	`github.com/hliangzhao/LearnGo/5-concurrent-model/pool`
+	`github.com/hliangzhao/LearnGo/5-concurrent-model/runner`
 	`io`
 	`log`
 	`math/rand`
@@ -11,6 +12,45 @@ import (
 	`time`
 )
 
+/*
+两种并发模型：runner和pool
+*/
+
+
+func main() {
+	// 测试有缓冲区通道
+	testBufferedChannel()
+
+	// 测试runner
+	r := runner.New(4 * time.Second)
+	r.AddTasks(createTask(), createTask(), createTask())
+	err := r.Start()
+	switch err {
+	case runner.ErrInterrupt:
+		fmt.Printf("Task interrupted\n")
+	case runner.ErrTimeout:
+		fmt.Printf("Task timeout\n")
+	default:
+		fmt.Println("all finished")
+	}
+
+
+	// 测试pool
+	p, err := pool.New(Factory, 5)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	wg.Add(10)
+	for id := 0; id < 10; id++ {
+		go Query(id, p)
+	}
+	wg.Wait()
+
+	p.Close()
+}
+
+
+// testBufferedChannel 使用有缓冲区的通道
 func testBufferedChannel() {
 	// 创建一个有缓存的通道
 	ch := make(chan int, 5)
@@ -39,44 +79,8 @@ func testBufferedChannel() {
 }
 
 
-// 两种并发模型：runner和pool
 
-
-func main() {
-	// testBufferedChannel()
-
-	// // 测试runner
-	// r := runner.New(4 * time.Second)
-	// r.AddTasks(createTask(), createTask(), createTask())
-	// err := r.Start()
-	// switch err {
-	// case runner.ErrInterrupt:
-	// 	fmt.Printf("Task interrupted\n")
-	// case runner.ErrTimeout:
-	// 	fmt.Printf("Task timeout\n")
-	// default:
-	// 	fmt.Println("all finished")
-	// }
-
-
-	// 测试pool
-	p, err := pool.New(Factory, 5)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	wg.Add(10)
-	for id := 0; id < 10; id++ {
-		go Query(id, p)
-	}
-	wg.Wait()
-
-	p.Close()
-}
-
-
-
-// for runner
-
+/* for runner */
 func createTask() func(int) {
 	return func(id int) {
 		t := rand.Int() % 10 + 1
@@ -86,8 +90,8 @@ func createTask() func(int) {
 }
 
 
-// for pool
 
+/* for pool */
 var counter int32
 
 // DBConnection 自定义一种模拟数据库连接的资源

@@ -14,5 +14,6 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+	// 创建一个Logger实例，同时写内容到标准输出和文件
 	Logger = log.New(io.MultiWriter(os.Stdout, file), "Log: ", log.LstdFlags)
 }

@@ -1,3 +1,3 @@
-module 7-testing-benchmarking
+module github.com/hliangzhao/LearnGo/7-testing-benchmarking
 
 go 1.17

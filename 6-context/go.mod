@@ -1,3 +1,3 @@
-module 6-context
+module github.com/hliangzhao/LearnGo/6-context
 
 go 1.17

@@ -4,8 +4,8 @@ option go_package = "github.com/hliangzhao/LearnGo/10-gRPC/route";
 
 package route;
 
-// 定义信息类型（数据）
 
+// 定义信息类型（数据）
 message Point {
   int32 latitude = 1;       // 把一个数字作为key（json以字符串为key）
   int32 longitude = 2;
@@ -37,8 +37,8 @@ message RecommendationRequest {
     Point point = 2;
 }
 
-// 定义服务（方法）
 
+// 定义服务（方法）
 service RouteGuide {
   // Unary：输入为一个坐标点，返回这个点的特征
   rpc GetFeature(Point) returns (Feature) {}

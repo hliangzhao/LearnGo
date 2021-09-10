@@ -13,7 +13,7 @@ import `fmt`
 // slice, map, channel, interface, func
 
 
-// 类型、结构体大小写决定了是否包外可见
+// 类型、结构体的"大小写"决定了是否包外可见
 
 
 
@@ -40,7 +40,7 @@ type User struct {
 	email string
 }
 
-// 使用"值接受者"，调用时使用这个值的副本来执行
+// 使用"值接受者"，调用时使用这个值的"副本"来执行。显然，这不如指针接收者高效！
 func (u User) notify()  {
 	fmt.Printf("user %s notified\n", u.name)
 }
@@ -89,7 +89,7 @@ func main() {
 	a := Admin{name: "Mike", email: "mike@google.com", admin: true}
 
 	sendNotification(u)
-	sendNotification(&a)
+	sendNotification(&a)            // 注意这里实现了notifier接口的形式是"指针接收者"，因此调用的时候要传递指针
 
 	e := Employee{level: 0, a: Admin{
 		name:  "Peter",

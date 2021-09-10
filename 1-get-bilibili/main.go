@@ -1,9 +1,9 @@
 package main        // 入口
 
 import (
-	`1-get-bilibili/downloader`
-	myfmt "1-get-bilibili/fmt"
 	"fmt"
+	`github.com/hliangzhao/LearnGo/1-get-bilibili/downloader`
+	myfmt "github.com/hliangzhao/LearnGo/1-get-bilibili/fmt"        // 导入自定义包，使用别名
 )
 
 func main() {

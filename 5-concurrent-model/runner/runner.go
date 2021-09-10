@@ -66,7 +66,7 @@ func (r *Runner) Start() error {
 		// r.complete不为nil当且仅当其执行出现了被中断的问题，即ErrInterrupt
 		return err
 	case <- r.timeout:
-		// r.timeout这个通道里面有数据，则意味着已经到大了设定的时限，则返回超时错误
+		// r.timeout这个通道里面有数据，则意味着已经到达了设定的时限，则返回超时错误
 		return ErrTimeout
 	}
 }

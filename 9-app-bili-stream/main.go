@@ -7,7 +7,7 @@ import (
 
 func main() {
 	biliClient := bili.New()
-	err := biliClient.Connect(977262)
+	err := biliClient.Connect(50821)
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
