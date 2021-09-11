@@ -71,3 +71,5 @@ context主要是用来在协程之间**传递上下文信息**，包括取消信
 #### [13-Docker](https://github.com/hliangzhao/LearnGo/tree/main/13-Docker)
 
 给出了Dockerfile的一个构建示例。
+
+给出了一个简易版的Docker实现。具体地，需要在代码中调用系统调用创建cgroup等内容对试图运行的程序进行进程隔离。
