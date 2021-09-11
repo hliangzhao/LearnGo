@@ -6,14 +6,19 @@
 通过一个简单的http get的例子熟悉Golang的语法。
 
 
-#### [2-array-slice-map](https://github.com/hliangzhao/LearnGo/tree/main/2-array-slice-map)
+#### [2-array-slice-map-func](https://github.com/hliangzhao/LearnGo/tree/main/2-array-slice-map-func)
 
-介绍Golang中的数组、切片、映射的创建及使用（`make`、传值 or 传址）。
+介绍Golang中的数组、切片、映射、函数的创建及使用（`make`、传值 or 传址）。
 
 
 #### [3-type-system](https://github.com/hliangzhao/LearnGo/tree/main/3-type-system)
 
 介绍内置类型、引用类型、结构体、接口以及基于此的、多态的实现。
+
+
+#### [3-add-utils](https://github.com/hliangzhao/LearnGo/tree/main/3-add-utils)
+
+介绍golang内置的常用工具，如操纵io流、发起外部进程、编码解码等。
 
 
 #### [4-goroutine-channel](https://github.com/hliangzhao/LearnGo/tree/main/4-goroutine-channel)
