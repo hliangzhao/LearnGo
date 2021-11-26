@@ -16,6 +16,8 @@ import (
 	解码：将字节数组还原为对象
 */
 
+// TODO: OpenFile返回的是一个IO流（更具体一点，是一个文件流），将encoder和decoder解读为套接在流上的"奶嘴"，方便数据的存取
+
 type Address struct {
 	Type    string
 	City    string
@@ -31,23 +33,25 @@ type VCard struct {
 
 // Encoding2Json 将对象以json格式编码为字节数组/以json格式写入文本文件
 func Encoding2Json() {
-	pa := &Address{"private", "Hangzhou", "China"}
+	pa := &Address{"home", "Hangzhou", "China"}
 	wa := &Address{"work", "Boom", "Belgium"}
 	vc := VCard{"Narcissus", "Zhao", []*Address{pa, wa}, "A genius"}
 
-	// 以json格式编码为字节数组
+	// TODO：以json格式将内存中的变量vc编码为字节数组
 	js, _ := json.Marshal(vc)
 	fmt.Printf("JSON format:\n%s\n\n", js)
 
-	// 将字节数组js以json的格式解码为golang对象
+	// TODO：将字节数组js以json的格式解码到内存对象v中
 	v := VCard{}
 	_ = json.Unmarshal(js, &v)
 	fmt.Println(v)
 
 	// 把内存中的对象vc以json格式写入文本文件
-	file, _ := os.OpenFile("./coding/vcard.json", os.O_WRONLY|os.O_CREATE, 0644)
+	file, _ := os.OpenFile("./coding/vcard.json", os.O_WRONLY | os.O_CREATE, 0644)
 	enc := json.NewEncoder(file)
+	// 将内存中的变量vc的JSON编码写入自身（即file，是一个流；而enc是一个套在流出入口上的一个"奶嘴"）
 	_ = enc.Encode(vc)
+	// 流的关闭可以放到defer中执行
 	defer func() {
 		err := file.Close()
 		if err != nil {
@@ -65,7 +69,7 @@ func DecodingFromJson() {
 
 	// 将json格式的字节数组解码到对象f中
 	_ = json.Unmarshal(b, &f)
-	// 使用类型判别来访问f
+	// 使用类型判别来访问f（将f在内存中以类型map[string]interface{}的一个实例来解读）
 	m := f.(map[string]interface{})
 	for k, v := range m {
 		switch vv := v.(type) {

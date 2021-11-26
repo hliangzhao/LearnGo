@@ -11,7 +11,7 @@ import (
 
 func main() {
 	ctx := context.Background()
-	ctx, cancel := context.WithTimeout(ctx, time.Second * 4)
+	ctx, cancel := context.WithTimeout(ctx, time.Second * 5)
 	defer cancel()
 
 	// 用新的、发起http request的方法发送请求，目的是让我们能够把context传进去

@@ -21,6 +21,7 @@ func main() {
 	// 测试有缓冲区通道
 	testBufferedChannel()
 
+
 	// 测试runner
 	r := runner.New(4 * time.Second)
 	r.AddTasks(createTask(), createTask(), createTask())
@@ -115,12 +116,13 @@ var wg sync.WaitGroup
 func Query(query int, pool *pool.Pool) {
 	defer wg.Done()
 
-	resource, err := pool.AcquireResource()
+	conn, err := pool.AcquireResource()
 	if err != nil {
 		fmt.Println(err)
 	}
+	defer pool.ReleaseResource(conn)
 
-	defer pool.ReleaseResource(resource)
+	// use conn to do some DB operation
 	t := rand.Int() % 10 + 1
 	time.Sleep(time.Second + time.Duration(t))
 	fmt.Printf("finish query %d\n", query)

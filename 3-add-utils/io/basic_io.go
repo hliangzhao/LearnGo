@@ -12,6 +12,10 @@ import (
 
 /* 从标准输入中读取数据到缓冲区：示例1 */
 
+// TODO：同样地，os.Stdin之类的属于IO流，buffer reader或buffer writer是套接在流之上方便存取数据的"奶嘴"，
+//  ReadString或WriteString则可以理解为奶嘴提供的具体的存储数据方法，如"吸"、"咬"等。显然，读取或写入的直接就是字符串了
+
+
 // Calculator 从标准输入中读取表达式并计算
 func Calculator() {
 	inputReader := bufio.NewReader(os.Stdin)

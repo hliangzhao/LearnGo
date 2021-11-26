@@ -38,6 +38,7 @@ func main() {
 
 	/*
 		调用wg实现上面说的"主线程等待"。此时两个协程并行执行，因此总共花费1秒。
+		TODO：在主线程中需要添加协程（Add）并等待（Wait），则协程中需要调用Done方法来通知主线程自己结束了
 	*/
 	wg.Add(2) // 主线程要等待两个协程完成执行
 	go say2("worker #1")
@@ -48,15 +49,15 @@ func main() {
 
 	// ****************************************************************
 	/*
-		使用channel在协程之间传递信息
+		TODO：使用channel在协程之间传递信息。用途类似于python中multiprocessing包提供的Queue
 	*/
 	wg.Add(2)
-	ch := make(chan int, 0) // string是channel内存储的数据的类型，0是指定的buffer大小
+	ch := make(chan int, 0) // int是channel内存储的数据的类型，0是指定的buffer大小
 	go player("Julia", ch)
 	go player("Mike", ch)
 
-	ch <- 0 // 主线程扮演裁判的角色，创建球并传给某个协程
-	// 尤其要注意，通道要在协程被创建之后再创建，否则会因为没有协程消费这个通道数据而导致dead lock
+	ch <- 0 // 主线程扮演裁判的角色，创建球并传给某个协程（将数据填充进通道中）
+	// 尤其要注意，通道数据要在协程被创建之后再填充，否则会因为没有协程消费这个通道数据而导致dead lock
 
 	wg.Wait()
 
@@ -73,7 +74,7 @@ func main() {
 	fmt.Println(counter)
 
 	/*
-		解决方法1：使用互斥锁
+		TODO：解决方法1：使用互斥锁
 	*/
 	wg.Add(2)
 	go SafeCounter()
@@ -82,7 +83,7 @@ func main() {
 	fmt.Println(counter)
 
 	/*
-		解决方法2：将其申明为原子操作
+		TODO：解决方法2：将其申明为原子操作
 	*/
 	wg.Add(2)
 	go AtomicIncCounter()
@@ -91,12 +92,12 @@ func main() {
 	fmt.Println(counter)
 
 	/*
-		解决方法3：将公共数据以channel的形式共享
+		TODO：解决方法3：将公共数据以channel的形式共享
 	*/
 	wg.Add(2)
 	go ChannelIncCounter()
 	go ChannelIncCounter()
 	intCh <- 0
 	wg.Wait()
-	fmt.Println(<-intCh)
+	fmt.Println(<-intCh)        // 由主线程手动取出数据
 }

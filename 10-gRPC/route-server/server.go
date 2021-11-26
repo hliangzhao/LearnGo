@@ -24,8 +24,8 @@ import (
 // 首先，嵌入UnimplementedRouteGuideServer这个结构体
 // 然后依次实现该接口中声明的方法
 type routeGuideServer struct {
-	features []*pb.Feature                            // 模拟一个数据库
-	pb.UnimplementedRouteGuideServer            // 本接口必然要内嵌这个方法
+	features                         []*pb.Feature // 模拟一个数据库
+	pb.UnimplementedRouteGuideServer               // 本接口必然要内嵌这个方法
 }
 
 func (s *routeGuideServer) GetFeature(ctx context.Context, point *pb.Point) (*pb.Feature, error) {
@@ -76,7 +76,7 @@ func calcDis(p1, p2 *pb.Point) int32 {
 	dlat := lat2 - lat1
 	dlng := lng2 - lng1
 
-	a := math.Sin(dlat/2) * math.Sin(dlat/2) + math.Cos(lat1)*math.Cos(lat2) * math.Sin(dlng/2) * math.Sin(dlng/2)
+	a := math.Sin(dlat/2)*math.Sin(dlat/2) + math.Cos(lat1)*math.Cos(lat2)*math.Sin(dlng/2)*math.Sin(dlng/2)
 	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
 
 	distance := R * c
@@ -154,21 +154,21 @@ func newRouteGuideServer() *routeGuideServer {
 		{
 			Name: "浙江大学玉泉校区 浙江省杭州市西湖区浙大路38号",
 			Location: &pb.Point{
-				Latitude: 30306202,
+				Latitude:  30306202,
 				Longitude: 120084879,
 			},
 		},
 		{
 			Name: "西溪国家湿地公园 浙江省杭州市西溪湿地",
 			Location: &pb.Point{
-				Latitude: 30268839,
+				Latitude:  30268839,
 				Longitude: 120063346,
 			},
 		},
 		{
 			Name: "三潭映月 浙江省杭州市西湖区西湖景点",
 			Location: &pb.Point{
-				Latitude: 30238665,
+				Latitude:  30238665,
 				Longitude: 120144978,
 			},
 		},

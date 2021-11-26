@@ -7,7 +7,7 @@ import (
 )
 
 
-// Sqrt 在返回值处指定返回的变量名称
+// Sqrt 在返回值处指定返回的变量分别为ret和err
 func Sqrt(f float64) (ret float64, err error) {
 	if f < 0 {
 		ret = math.NaN()
@@ -45,7 +45,7 @@ func TestCompose() {
 }
 
 func Fib() func() int {
-	// a和b的状态会被内部的函数记住
+	// TODO：a和b的状态会被内部的函数记住
 	a, b := 1, 1
 	return func() int {
 		a, b = b, a + b

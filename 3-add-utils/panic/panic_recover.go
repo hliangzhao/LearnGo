@@ -6,20 +6,22 @@ import (
 	`strings`
 )
 
-/* 自定义Error类型，捕获到panic之后执行相应处理 */
+/* 自定义Error类型，捕获到panic之后执行相应处理：首先通过recover()获得error，然后解析它 */
 
+// ParseErr 自定义error应当包含一个error类型的字段
 type ParseErr struct {
 	Idx  int
 	Word string
 	Err  error
 }
 
+// String 是自定义error必须要实现的方法
 func (e *ParseErr) String() string {
 	return fmt.Sprintf("error parsing %q as int", e.Word)
 }
 
 func Parse(in string) (numbers []int, err error) {
-	// 捕获error要以defer func(){}()的形式编写！
+	// 捕获error的匿名函数总是会在Parse结束的时候被执行。如果没有错误，则正常推出，否则解析error
 	defer func() {
 		if r := recover(); r != nil {
 			var ok bool

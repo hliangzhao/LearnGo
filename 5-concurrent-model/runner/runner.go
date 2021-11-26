@@ -17,7 +17,7 @@ var (
 type Runner struct {
 	interrupt chan os.Signal        // 声明一个用来传递和接收OS信号的通道
 	complete chan error             // 声明一个用来传递和接收任务执行时是否出错的通道
-	timeout <- chan time.Time       // 声明一个单向的通道，存放存入数据时的时间
+	timeout <- chan time.Time       // 声明一个 单向的 通道，存放"允许的、Runner的运行时常"
 	tasks []func(id int)            // 声明一个任务列表（slice）
 }
 

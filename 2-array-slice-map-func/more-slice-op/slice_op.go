@@ -2,6 +2,8 @@ package main
 
 import `fmt`
 
+// TODO：录入代码库
+
 // Enlarge 将输入的切片变大factor倍
 func Enlarge(s []int, factor int) []int {
 	ns := make([]int, len(s) * factor)
@@ -19,7 +21,7 @@ func RemoveSeg(s []string, start, end int) []string {
 	return ret
 }
 
-func TestSlice() {
+func main() {
 	s1 := make([]int, 5, 20)
 	fmt.Println(len(s1), s1)
 	s1 = Enlarge(s1, 2)
@@ -29,8 +31,4 @@ func TestSlice() {
 	fmt.Println(len(s2), s2)
 	s2 = RemoveSeg(s2, 1, 3)
 	fmt.Println(len(s2), s2)
-}
-
-func main() {
-	TestSlice()
 }

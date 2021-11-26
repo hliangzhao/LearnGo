@@ -13,6 +13,8 @@ import (
 
 /* 调用ioutil提供的高级API接口 */
 
+// TODO：ioutil提供的读写方法操作的都是字节数组
+
 func CopyFile(srcFilename, dstFilename string) {
 	buf, readerErr := ioutil.ReadFile(srcFilename)
 	if readerErr != nil {
@@ -81,6 +83,7 @@ func ReadZipFile(filename string) {
 	}()
 
 	var r *bufio.Reader
+	// TODO：bufio和gzip提供的NewReader方法，可以理解为提供不同功能的奶嘴
 	inputReader, err := gzip.NewReader(inputFileHandle)
 	if err != nil {
 		r = bufio.NewReader(inputFileHandle)

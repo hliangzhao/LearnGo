@@ -1,3 +1,3 @@
 module github.com/hliangzhao/LearnGo/1-get-bilibili
 
-go 1.17
+go 1.16

@@ -7,6 +7,7 @@ import (
 	`time`
 )
 
+// handler 作为URL的处理函数，其参数固定为ResponseWriter和Request
 func handler(w http.ResponseWriter, r *http.Request) {
 	// 从request中拿出ctx
 	// 从抓包上来看，跨进程的ctx，本质上是客户端提前向server端（也就是server端还在执行过程中）发送了fin，
@@ -19,7 +20,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	go func() {
 		// really do handling...
-		time.Sleep(time.Second * 4)
+		time.Sleep(time.Second * 3)
 		complete <- struct{}{}              // 创建一个空的struct的写法
 	}()
 
@@ -31,7 +32,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln(err)
 		}
 	// 用time.After()模拟本服务端执行任务的时间开销
-	case <- time.After(time.Second * 3):
+	case <- time.After(time.Second * 4):
 		_, err := fmt.Fprintf(w, "server sleeping finished.\n")
 		if err != nil {
 			log.Fatalln(err)

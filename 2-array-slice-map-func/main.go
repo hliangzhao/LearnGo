@@ -3,19 +3,19 @@ package main
 import `fmt`
 
 func main() {
-	/* 数组 */
+	/* 数组array */
 	arr := [5]string{"ok", "asd", "123", "f", "12321"}          // 指定数组大小
 	arr2 := [...]string{"12321", "yes", "dsf"}                  // 编译器自行计算长度
 
 	for idx, value := range arr {
 		fmt.Println(idx, value)
 	}
-	ModifyArray(arr) // "传值"，arr本身并未被改变
+	ModifyArray(arr) // TODO："传值"，arr本身并未被改变
 	fmt.Println(arr)
 	// 数组所申请的空间cap等于数组的长度len
 	fmt.Println(arr2, len(arr2), cap(arr2))
 
-	// deep copy，开辟了新的内存空间，将数据复制进去
+	// TODO：直接赋值的操作对于array而言是deep copy，开辟了新的内存空间
 	arr3 := arr
 	arr3[0] = "abc"
 	fmt.Println("arr:", arr, ", arr3:", arr3)
@@ -23,13 +23,13 @@ func main() {
 
 
 
-	/* 切片 */
+	/* 切片slice */
 	// 切片由一个首地址指针和两个表示长度和容量的整数组成
 	// 切片是不指定大小的，是一种"动态数组"，可按需自动增长和缩小
 	s := []string{"abc", "xyz"}
 	fmt.Println(len(s), cap(s))
 
-	// 使用make来创建数据类型（slice, map, channel）
+	// TODO：使用make来创建数据类型（slice, map, channel）
 	s2 := make([]int, 2, 2)
 	fmt.Println(len(s2), cap(s2))
 	s2 = append(s2, 1)                  // slice可以append
@@ -38,7 +38,8 @@ func main() {
 	ModifySlice(s2) // "传址"
 	fmt.Println(s2)
 
-	// 下面的操作输出表明通过截取操作拿到的新切片并未开辟新的存储空间，而只是生成了对局部区域的新引用。
+	// 下面的操作输出表明：
+	// TODO：通过截取操作拿到的新切片并未开辟新的存储空间，而只是生成了对局部区域的新引用。
 	// 修改这个引用所指向的空间内所存储的数据是会改变原切片的
 	s3 := s2[:3]
 	fmt.Println(s3, len(s3), cap(s3))
@@ -56,12 +57,12 @@ func main() {
 
 
 
-	/* 映射 */
+	/* 映射map */
 	m := map[string]int {
 		"Julia":90,
 		"Mike": 100,
 	}
-	// 若键不存在，则值未value类型的默认值（此处是0）
+	// 若键不存在，则值为value类型的默认值（此处是0）
 	fmt.Println(m["abc"], m["dfd"], len(m))
 
 	// value，exist

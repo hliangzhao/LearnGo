@@ -6,7 +6,7 @@ import (
 	`time`
 )
 
-// 消费通道数据的协程案例
+// 消费通道数据的协程案例。在我们的游戏中，ch存放的是游戏轮数
 func player(name string, ch chan int) {
 	defer wg.Done() // 函数退出前自动触发
 
