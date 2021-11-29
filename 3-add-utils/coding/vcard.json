@@ -1,1 +1,17 @@
-{"Firstname":"Narcissus","Lastname":"Zhao","Addresses":[{"Type":"private","City":"Hangzhou","Country":"China"},{"Type":"work","City":"Boom","Country":"Belgium"}],"Remark":"A genius"}
+{
+  "Firstname": "Narcissus",
+  "Lastname": "Zhao",
+  "Addresses": [
+    {
+      "Type": "private",
+      "City": "Hangzhou",
+      "Country": "China"
+    },
+    {
+      "Type": "work",
+      "City": "Boom",
+      "Country": "Belgium"
+    }
+  ],
+  "Remark": "A genius"
+}

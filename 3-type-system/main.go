@@ -51,8 +51,8 @@ func (u User) printName() {
 	fmt.Println(u.name)
 }
 
-// 使用"指针接收者"，共享调用方法时接收者所指向的值
-// 因此，如果想要一个方法修改调用者本身的字段，需要使用指针接收者
+// TODO：使用"指针接收者"，共享调用方法时接收者所指向的值
+//  因此，如果想要一个方法修改调用者本身的字段，需要使用指针接收者
 func (u *User) changeName(name string) {
 	u.name = name
 }
@@ -69,7 +69,7 @@ type Admin struct {
 	admin bool
 }
 
-// 注意这里实现了notifier接口的形式是"指针接收者"，因此调用的时候要传递指针
+// TODO：注意这里实现了notifier接口的形式是"指针接收者"，因此调用的时候要传递指针
 func (a *Admin) notify() {
 	fmt.Printf("admin %s notified\n", a.name)
 }

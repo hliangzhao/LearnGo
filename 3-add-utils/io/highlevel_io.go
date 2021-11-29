@@ -6,6 +6,7 @@ import (
 	`fmt`
 	`io`
 	`io/ioutil`
+	`log`
 	`os`
 	`strconv`
 	`strings`
@@ -16,12 +17,13 @@ import (
 // TODO：ioutil提供的读写方法操作的都是字节数组
 
 func CopyFile(srcFilename, dstFilename string) {
-	buf, readerErr := ioutil.ReadFile(srcFilename)
+	// TODO: 读出来的直接就是字节数组
+	bytes, readerErr := ioutil.ReadFile(srcFilename)
 	if readerErr != nil {
 		fmt.Printf("error %v happened when reading file: %v", readerErr, srcFilename)
 		os.Exit(1)
 	}
-	writerErr := ioutil.WriteFile(dstFilename, buf, 0644)
+	writerErr := ioutil.WriteFile(dstFilename, bytes, 0644)
 	if writerErr != nil {
 		panic(writerErr.Error())
 	}
@@ -42,32 +44,19 @@ func (p *Page) load(title string) (err error) {
 	return
 }
 
-func CopyFile2(srcFilename, dstFilename string) (written int64, err error) {
-	src, srcErr := os.Open(srcFilename)
-	if srcErr != nil {
-		fmt.Printf("error %v happened when opening src file: %v", srcErr, srcFilename)
-		os.Exit(1)
-	}
+func CopyFile2(file1, file2 string) (written int64, err error) {
+	inStream, _ := os.Open(file1)
+	outStream, _ := os.Create(file2)
 	defer func() {
-		err = src.Close()
-		if err != nil {
-			fmt.Printf("error %v happened when closing file: %v", err, srcFilename)
+		if err := inStream.Close(); err != nil {
+			log.Fatalln("failed to close file")
+		}
+		if err = outStream.Close(); err != nil {
+			log.Fatalln("failed to close file")
 		}
 	}()
 
-	dst, dstErr := os.Create(dstFilename)
-	if dstErr != nil {
-		fmt.Printf("error %v happened when opening dst file: %v", dstErr, dstFilename)
-		os.Exit(1)
-	}
-	defer func() {
-		err = dst.Close()
-		if err != nil {
-			fmt.Printf("error %v happened when closing file: %v", err, dstFilename)
-		}
-	}()
-
-	return io.Copy(src, dst)
+	return io.Copy(outStream, inStream)
 }
 
 func ReadZipFile(filename string) {
@@ -95,6 +84,7 @@ func ReadZipFile(filename string) {
 		line, err := r.ReadString('\n')
 		if err == io.EOF {
 			fmt.Println("Read file done")
+			return
 		}
 		fmt.Print(line)
 	}
@@ -123,13 +113,15 @@ func ParseProducts(filename string) []Product {
 	inputReader := bufio.NewReader(inputFileHandle)
 	for {
 		inStr, readerErr := inputReader.ReadString('\n')
-		if readerErr == io.EOF {
-			return data
-		}
 		inStr = inStr[:len(inStr) - 1]
 		inArr := strings.Split(inStr, ";")
 		price, _ := strconv.ParseFloat(inArr[1], 64)
 		quantity, _ := strconv.Atoi(inArr[2])
 		data = append(data, Product{inArr[0], price, quantity})
+
+		// TODO：判断EOF要放在最后，因为如果源文件只有一行，那么readErr就会被置为EOF了，如果直接返回则data为空
+		if readerErr == io.EOF {
+			return data
+		}
 	}
 }

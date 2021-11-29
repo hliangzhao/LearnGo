@@ -14,6 +14,7 @@ import (
 // ReadFromArgs 读取命令行参数并打印出来
 func ReadFromArgs() {
 	who := "Alice "
+	// TODO：os.Args是所有在shell中打入的内容，第一个是程序的名字，紧接着的是参数
 	if len(os.Args) > 1 {
 		who += strings.Join(os.Args[1:], " ")
 	}
@@ -41,7 +42,8 @@ func UseFlag() {
 	// 解析定义的flags
 	flag.Parse()
 	var s = ""
-	// flag.NArg()返回去除了flag的参数的个数
+	// flag.NArg()返回去除了flag的参数的个数（注意，是包含程序名这个"第一参数"的！）
+	// TODO：注意区分flag和arg！
 	for i := 0; i < flag.NArg(); i++ {
 		if i > 0 {
 			s += Space

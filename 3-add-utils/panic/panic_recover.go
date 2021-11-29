@@ -6,7 +6,7 @@ import (
 	`strings`
 )
 
-/* 自定义Error类型，捕获到panic之后执行相应处理：首先通过recover()获得error，然后解析它 */
+// TODO：自定义Error类型，捕获到panic之后执行相应处理：首先通过recover()获得error，然后解析它
 
 // ParseErr 自定义error应当包含一个error类型的字段
 type ParseErr struct {
@@ -27,6 +27,7 @@ func Parse(in string) (numbers []int, err error) {
 			var ok bool
 			err, ok = r.(error)
 			if !ok {
+				// TODO：这里要format的是r！而非err。err是执行type assertion时发生的错误，我们并不关心！
 				err = fmt.Errorf("package: %v", r)
 			}
 		}
@@ -39,6 +40,8 @@ func Parse(in string) (numbers []int, err error) {
 	for idx, value := range fields {
 		num, err := strconv.Atoi(value)
 		if err != nil {
+			// TODO：对于自定义的error，应当传入的，是实例的地址！
+			//  否则自定义String()方法无法被执行
 			panic(&ParseErr{idx, value, err})
 		}
 		numbers = append(numbers, num)
@@ -59,6 +62,7 @@ func TestPanicRecover() {
 		fmt.Printf("Parsing %v:\n", ex)
 		nums, err := Parse(ex)
 		if err != nil {
+			// TODO；如果产生了error，因为panic已经负责处理，因此这里直接continue即可
 			fmt.Println(err)
 			continue
 		}

@@ -69,7 +69,7 @@ func main() {
 	score, exist := m["abc"]
 	fmt.Println(score, exist)
 
-	// map作为函数的参数，和slice类似，是传址
+	// TODO：map作为函数的参数，和slice类似，是传址
 	ModifyMap(m)
 	fmt.Println(m)
 

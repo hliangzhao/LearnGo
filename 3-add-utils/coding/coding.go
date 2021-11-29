@@ -47,7 +47,7 @@ func Encoding2Json() {
 	fmt.Println(v)
 
 	// 把内存中的对象vc以json格式写入文本文件
-	file, _ := os.OpenFile("./coding/vcard.json", os.O_WRONLY | os.O_CREATE, 0644)
+	file, _ := os.OpenFile("./coding/vcard.json", os.O_WRONLY|os.O_CREATE, 0644)
 	enc := json.NewEncoder(file)
 	// 将内存中的变量vc的JSON编码写入自身（即file，是一个流；而enc是一个套在流出入口上的一个"奶嘴"）
 	_ = enc.Encode(vc)
@@ -61,15 +61,14 @@ func Encoding2Json() {
 	}()
 }
 
-
 // DecodingFromJson 将json字符串解码为golang中的对象
 func DecodingFromJson() {
 	b := []byte(`{"Name": "Wednesday", "Age": 6, "Parents": ["Gomez", "Lily"]}`)
-	var f interface{}           // f被声明为一个接口，因此可以被赋予任何值
+	var f interface{} // f被声明为一个接口，因此可以被赋予任何值
 
 	// 将json格式的字节数组解码到对象f中
 	_ = json.Unmarshal(b, &f)
-	// 使用类型判别来访问f（将f在内存中以类型map[string]interface{}的一个实例来解读）
+	// TODO：使用类型判别来访问f（将f在内存中以类型map[string]interface{}的一个实例来解读）
 	m := f.(map[string]interface{})
 	for k, v := range m {
 		switch vv := v.(type) {
@@ -87,6 +86,28 @@ func DecodingFromJson() {
 			fmt.Println(k, "is of a type which I don' know")
 		}
 	}
+}
+
+type VCard2 struct {
+	Name      string
+	Age       int
+	Addresses []*Address
+	Remark    string
+}
+
+func DecodingFromJson2() {
+	byteArr := []byte(`{"Name":"Julia Zhao","Age":24,"Addresses":[{"Type":"work","City":"hangzhou","Country":"China"},{"Type":"home","City":"nanjing","Country":"China"}],"Remark":"this is me"}`)
+	vc := VCard2{}
+	// TODO：直接解码到一个VCard2实例中
+	_ = json.Unmarshal(byteArr, &vc)
+	fmt.Printf("Name: %v\n", vc.Name)
+	fmt.Printf("Age: %v\n", vc.Age)
+	fmt.Printf("Address: ")
+	for _, addr := range vc.Addresses {
+		fmt.Printf("%v ", *addr)
+	}
+	fmt.Println()
+	fmt.Printf("Remark: %v\n", vc.Remark)
 }
 
 // DecodingFromXML 将XML字符串解码为golang中的对象
@@ -116,13 +137,12 @@ func DecodingFromXML() {
 	}
 }
 
-
 /* Gob: like pickle (for python) and Serialization (for java),
 used for data (param & result) transmission, typically for RPCs. */
 
 type P struct {
 	X, Y, Z int
-	Name string
+	Name    string
 }
 
 type Q struct {
@@ -134,17 +154,48 @@ func UseGob() {
 	// "自产自销"
 	var net bytes.Buffer
 	enc := gob.NewEncoder(&net)
-	_ = enc.Encode(P{3, 4, 5, "Pythagoras"})   // write to net
+	_ = enc.Encode(P{3, 4, 5, "Pythagoras"}) // write to net
 
 	dec := gob.NewDecoder(&net)
 	q := Q{}
-	_ = dec.Decode(&q)         // decoded from net
+	_ = dec.Decode(&q) // decoded from net
 	fmt.Printf("%q: {%d, %d}\n", q.Name, *q.X, *q.Y)
+}
+
+// Send the client send request data
+func Send() bytes.Buffer {
+	var data bytes.Buffer
+	enc := gob.NewEncoder(&data)
+
+	p := P{
+		X:    3,
+		Y:    4,
+		Z:    5,
+		Name: "data transmitted in network",
+	}
+	_ = enc.Encode(&p)
+	return data
+}
+
+// Receive the server receives the request and processes
+func Receive(buffer bytes.Buffer) Q {
+	dec := gob.NewDecoder(&buffer)
+	q := Q{}
+	_ = dec.Decode(&q)
+	fmt.Printf("%d, %d, %s", *q.X, *q.Y, q.Name)
+	return q
+}
+
+func UseGob2() {
+	buffer := Send()
+	_ = Receive(buffer)
 }
 
 func main() {
 	// Encoding2Json()
 	// DecodingFromJson()
+	// DecodingFromJson2()
 	// DecodingFromXML()
-	UseGob()
+	// UseGob()
+	UseGob2()
 }
