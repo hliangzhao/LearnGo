@@ -34,15 +34,22 @@ func main() {
 	s := new(Square)
 	s.side = 5
 
-	areaIntf = s
 	// use type assertion
 	// 使用 var.(Intf_name) 来测试某个变量 var 是否实现了 Intf_name 接口
+	areaIntf = s
 	if t, ok := areaIntf.(*Square); ok {
-		fmt.Printf("The format of areaIntf: %T, size: %f\n", t, t.Area())
+		fmt.Printf("Square: %f\n", t.Area())
 	}
 	if t, ok := areaIntf.(*Circle); ok {
-		fmt.Printf("The format of areaIntf: %T, size: %f\n", t, t.Area())
-	} else {
-		fmt.Println("areaIntf does not contain a variable of type Circle")
+		fmt.Printf("Circle: %f\n", t.Area())
+	}
+
+	c := Circle{radius: 5}
+	areaIntf = &c
+	if t, ok := areaIntf.(*Square); ok {
+		fmt.Printf("Square: %f\n", t.Area())
+	}
+	if t, ok := areaIntf.(*Circle); ok {
+		fmt.Printf("Circle: %f\n", t.Area())
 	}
 }

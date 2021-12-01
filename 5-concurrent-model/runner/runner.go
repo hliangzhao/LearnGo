@@ -8,17 +8,16 @@ import (
 )
 
 var (
-	ErrTimeout = errors.New("cannot finish task within the timeout")
+	ErrTimeout   = errors.New("cannot finish task within the timeout")
 	ErrInterrupt = errors.New("received interrupt from OS")
 )
 
-
 // Runner 给定一些tasks，要求在规定的时间内完成，否则报错（timeout或interrupt）
 type Runner struct {
-	interrupt chan os.Signal        // 声明一个用来传递和接收OS信号的通道
-	complete chan error             // 声明一个用来传递和接收任务执行时是否出错的通道
-	timeout <- chan time.Time       // 声明一个 单向的 通道，存放"允许的、Runner的运行时常"
-	tasks []func(id int)            // 声明一个任务列表（slice）
+	interrupt chan os.Signal   // 声明一个用来传递和接收OS信号的通道
+	complete  chan error       // 声明一个用来传递和接收任务执行时是否出错的通道
+	timeout   <-chan time.Time // 声明一个 单向的 通道，存放"允许的、Runner的运行时常"
+	tasks     []func(id int)   // 声明一个任务列表（slice）
 }
 
 func New(t time.Duration) *Runner {
@@ -26,7 +25,7 @@ func New(t time.Duration) *Runner {
 	return &Runner{
 		interrupt: make(chan os.Signal, 1),
 		complete:  make(chan error),
-		timeout:   time.After(t),           // 经过t秒之后，自动将time.Time实例传入timeout这个通道
+		timeout:   time.After(t), // 经过t秒之后，自动将time.Time实例传入timeout这个通道
 		tasks:     make([]func(int), 0),
 	}
 }
@@ -40,7 +39,7 @@ func (r *Runner) run() error {
 	for id, task := range r.tasks {
 		// select语句是处理channel数据的if-else逻辑
 		select {
-		case <- r.interrupt:
+		case <-r.interrupt:
 			// 如果r.interrupt这个通道里面有数据，则执行本case
 			signal.Stop(r.interrupt)
 			return ErrInterrupt
@@ -62,10 +61,10 @@ func (r *Runner) Start() error {
 	}()
 
 	select {
-	case err := <- r.complete:
+	case err := <-r.complete:
 		// r.complete不为nil当且仅当其执行出现了被中断的问题，即ErrInterrupt
 		return err
-	case <- r.timeout:
+	case <-r.timeout:
 		// r.timeout这个通道里面有数据，则意味着已经到达了设定的时限，则返回超时错误
 		return ErrTimeout
 	}

@@ -2,8 +2,6 @@ package main
 
 import `fmt`
 
-// TODO：录入代码库
-
 // Enlarge 将输入的切片变大factor倍
 func Enlarge(s []int, factor int) []int {
 	ns := make([]int, len(s) * factor)

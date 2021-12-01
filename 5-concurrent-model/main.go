@@ -7,6 +7,7 @@ import (
 	`io`
 	`log`
 	`math/rand`
+	`strconv`
 	`sync`
 	`sync/atomic`
 	`time`
@@ -16,13 +17,11 @@ import (
 两种并发模型：runner和pool
 */
 
-
 func main() {
-	// 测试有缓冲区通道
+	// 1 测试有缓冲区通道
 	testBufferedChannel()
 
-
-	// 测试runner
+	// 2 测试runner
 	r := runner.New(4 * time.Second)
 	r.AddTasks(createTask(), createTask(), createTask())
 	err := r.Start()
@@ -35,21 +34,22 @@ func main() {
 		fmt.Println("all finished")
 	}
 
-
-	// 测试pool
+	// 3 测试pool
 	p, err := pool.New(Factory, 5)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	wg.Add(10)
-	for id := 0; id < 10; id++ {
-		go Query(id, p)
+	for i := 0; i < 10; i++ {
+		str := "select user from table " + strconv.Itoa(i+1)
+		go Query(str, p)
 	}
 	wg.Wait()
 
-	p.Close()
+	if err := p.Close(); err != nil {
+		log.Fatalln(err)
+	}
 }
-
 
 // testBufferedChannel 使用有缓冲区的通道
 func testBufferedChannel() {
@@ -60,15 +60,18 @@ func testBufferedChannel() {
 	}
 	fmt.Println("Here is reachable")
 
-	// 测试1 对于有缓存空间的通道，往里面发送数据的操作只有在通道满的时候才会堵塞
+	// 对于有缓存空间的通道，往里面发送数据的操作只有在通道满的时候才会堵塞
 	// ch <- 5
 	// fmt.Println("Here is unreachable")
 
-
-	// 测试2 有缓存的通道，只有被关闭了之后才可以通过for range往外拿东西
-	// 没有缓存的通道，如果关闭了，则ok为false；如果通道为空，则dead lock
-	value, ok := <- ch
+	//
+	// TODO：没有缓存的通道，如果关闭了，则ok为false；如果通道为空，则dead lock；
+	//  有缓存的通道，只要里面有东西，就可以按照存放顺序取出来，并且ok为true。缓冲区大小其实就是仓库中货架的个数
+	//  channel里面放置的是"商品"，取出来1个就少1个
+	value, ok := <-ch
 	fmt.Println(value, ok)
+
+	// TODO：有缓存的通道，只有close之后才可以"通过for range"往外拿东西
 	close(ch)
 	for val := range ch {
 		fmt.Println(val)
@@ -79,18 +82,14 @@ func testBufferedChannel() {
 	}
 }
 
-
-
 /* for runner */
 func createTask() func(int) {
 	return func(id int) {
-		t := rand.Int() % 10 + 1
+		t := rand.Int()%10 + 1
 		time.Sleep(time.Second + time.Duration(t))
 		fmt.Printf("Task %d complete.\n", id)
 	}
 }
-
-
 
 /* for pool */
 var counter int32
@@ -102,7 +101,7 @@ type DBConnection struct {
 
 // Close 为这种资源定义Close方法使其成为一个Closer
 func (conn DBConnection) Close() error {
-	fmt.Printf("DB connection #%d closed\n", conn.id)
+	fmt.Printf("DB connection #%d is closed\n", conn.id)
 	return nil
 }
 
@@ -113,17 +112,21 @@ func Factory() (io.Closer, error) {
 
 var wg sync.WaitGroup
 
-func Query(query int, pool *pool.Pool) {
+func Query(sql string, pool *pool.Pool) {
 	defer wg.Done()
 
 	conn, err := pool.AcquireResource()
 	if err != nil {
 		fmt.Println(err)
 	}
-	defer pool.ReleaseResource(conn)
+	defer func() {
+		if err := pool.ReleaseResource(conn); err != nil {
+			log.Fatalln(err)
+		}
+	}()
 
 	// use conn to do some DB operation
-	t := rand.Int() % 10 + 1
-	time.Sleep(time.Second + time.Duration(t))
-	fmt.Printf("finish query %d\n", query)
+	queryTime := time.Duration(rand.Intn(2)+1) * time.Second
+	time.Sleep(time.Second)
+	fmt.Printf("`%s` with connection %v in %v\n", sql, conn, queryTime)
 }

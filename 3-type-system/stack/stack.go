@@ -53,6 +53,7 @@ func TestStack() {
 	}
 	fmt.Println(reflect.TypeOf(s), &s)
 
+	// TODO：s是实例，sAddr是实例的指针，但是s.Push()和sAddr.Push都是合法的，因为runtime会自动为我们解址
 	sAddr := new(Stack)          // 结构体变量指针
 	sAddr2 := &Stack{}           // 底层仍然会调用new()
 	for i := 0; i < 10; i++ {

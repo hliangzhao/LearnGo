@@ -38,7 +38,7 @@ func BatchDownloadVideoInfo(request InfoRequest) (InfoResponse, error) {
 			return InfoResponse{}, err
 		}
 
-		// 从网络中读取的是编码后的字节数组，将其解码为json格式
+		// TODO：从网络中读取的是编码后的字节数组，将其解码为json格式
 		if err = json.Unmarshal(respBytes, &videoInfo); err != nil {
 			return InfoResponse{}, err
 		}

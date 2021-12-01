@@ -1,6 +1,10 @@
 package main
 
-import `errors`
+import (
+	`errors`
+	`fmt`
+	`strconv`
+)
 
 /* 结合切片和interface实现可装载通用数据类型的stack */
 
@@ -30,4 +34,14 @@ func (s *GeneralStack) Pop() (interface{}, error) {
 	s1 := *s
 	*s = s1[:len(s1) - 1]
 	return s1[len(s1) - 1], nil
+}
+
+func TestGeneralStack() {
+	s := &GeneralStack{}
+	for i := 0; i < 10; i++ {
+		s.Push(i)
+		s.Push(float64(i) + 0.01)
+		s.Push("'" + strconv.Itoa(i) + "'")
+	}
+	fmt.Println(*s)
 }
