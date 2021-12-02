@@ -25,7 +25,7 @@ func doubleNumHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if _, err := fmt.Fprintf(w, strconv.Itoa(v * 2) + "\n"); err != nil {
+	if _, err := fmt.Fprintf(w, strconv.Itoa(v*2)+"\n"); err != nil {
 		http.Error(w, "cannot double v", http.StatusBadRequest)
 		return
 	}

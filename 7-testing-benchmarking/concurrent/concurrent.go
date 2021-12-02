@@ -6,6 +6,8 @@ import (
 	`sync/atomic`
 )
 
+// TODO：可以发现，使用mutex快于原子操作
+
 func atomicIncCounter(counter *int64, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for i := 0; i < 10000; i++ {

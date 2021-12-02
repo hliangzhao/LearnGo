@@ -11,13 +11,11 @@ import (
 最典型的案例是fmt.Println()，该函数动态获得传入的参数信息从而给出正确的格式输出。
 */
 
-
-
-/* 1 interface values to reflection objects */
+// TODO：1、获取对象的reflect元信息
 
 // printMeta 输入参数是everything
 func printMeta(obj interface{}) {
-	// reflection obj主要是四种
+	// reflection obj主要是四种：type、kind、name和value
 	t := reflect.TypeOf(obj)
 	k := t.Kind()
 	n := t.Name()
@@ -35,7 +33,7 @@ func testReflection1() {
 	var intVar int64 = 10
 	stringVar := "hello"
 	type book struct {
-		name string
+		name  string
 		pages int
 	}
 	sum := func(a, b int) int {
@@ -55,14 +53,13 @@ func testReflection1() {
 	printMeta(s)
 }
 
-
-
-/* 2 reflection objects to interface values */
+// TODO：2、通过Interface()和类型转换方法从reflect变量中拿到数据
 
 func testReflection2() {
 	floatVar := 3.14
 	v := reflect.ValueOf(floatVar)
-	// 通过v.Interface()方法拿到这个数据，并通过cast方法转换为对应的数据类型
+	// TODO：通过v.Interface()方法拿到这个数据（拿到的数据类型为interface{}），
+	//  然后再通过cast方法转换为对应的数据类型
 	newFloatVar := v.Interface().(float64)
 	fmt.Println(newFloatVar)
 
@@ -81,9 +78,7 @@ func testReflection2() {
 	fmt.Println(sliceVar, newSliceVar, newSliceVar2)
 }
 
-
-
-/* 3 modify reflection objects */
+// TODO：3、通过reflect修改对象
 
 func testReflection3() {
 	floatVar := 3.14
@@ -97,9 +92,7 @@ func testReflection3() {
 	fmt.Println(floatVar, vp.Elem())
 }
 
-
-
-/* 4 invoke methods from reflect objects */
+// TODO：4、通过reflect调用对象的方法
 
 type Student struct {
 	name string
@@ -128,9 +121,7 @@ func testReflection4() {
 	}
 }
 
-
-
-/* 5 make functions from reflect objects */
+// TODO：5、通过reflect拿到一个函数并对其进行修改
 
 // makeTimeFunc 将一个输入函数进行装饰。整个过程以reflect的方式执行
 func makeTimeFunc(f interface{}) interface{} {
@@ -155,19 +146,16 @@ func testFuncForMake() {
 	time.Sleep(time.Second)
 }
 
-
 func testReflection5() {
 	timedFunc := makeTimeFunc(testFuncForMake).(func())
 	timedFunc()
 }
 
-
-
 // 6 some examples
 
 type User struct {
 	name string
-	age int
+	age  int
 }
 
 func (u User) PrintName() {
@@ -183,7 +171,7 @@ type Aggregator func(int, int) int
 var (
 	user = User{
 		name: "Julia",
-		age: 24,
+		age:  24,
 	}
 	add Aggregator = func(a, b int) int {
 		return a + b
@@ -221,7 +209,6 @@ func testReflection6() {
 	inspect(add)
 	inspect(sub)
 }
-
 
 func main() {
 	testReflection1()

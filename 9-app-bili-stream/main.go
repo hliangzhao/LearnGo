@@ -11,10 +11,16 @@ func main() {
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-	defer biliClient.Disconnect()
+	defer func(biliClient *bili.BiliClient) {
+		err := biliClient.Disconnect()
+		if err != nil {
+
+		}
+	}(biliClient)
+
 	for {
-		// 从通过中取数据并根据其类型出发不同的操作
-		packBody := <- biliClient.Ch
+		// 从通道中取数据并根据其类型触发不同的操作
+		packBody := <-biliClient.Ch
 		switch packBody.Cmd {
 		case "DANMU_MSG":
 			msg, _ := packBody.ParseDanmu()

@@ -7,6 +7,7 @@ import (
 
 // BenchmarkMyConcurrentAtomicAdd 基准测试主要测试函数的运行时长
 func BenchmarkMyConcurrentAtomicAdd(b *testing.B) {
+	// TODO：首先重制计时器，然后运行多组取平均值
 	b.ResetTimer()
 	fmt.Println(b.N)
 	// 运行N次取平均值

@@ -19,8 +19,9 @@ func TestDoubleNumHandler(t *testing.T) {
 		t.Fatalf("cannot create a new request: %v, error: %v", request, err)
 	}
 
-	// NewRecorder用于大规模测试
+	// NewRecorder用于大规模测试，recorder内部嵌套了response
 	rec := httptest.NewRecorder()
+	// TODO：直接调用要测试的函数
 	doubleNumHandler(rec, request)
 
 	// 测试响应是否正确
@@ -52,11 +53,11 @@ func TestDoubleNumHandler(t *testing.T) {
 func TestDoubleNumHandler2(t *testing.T) {
 	// 编写单个测试的结构体，应该包含输入数据、输出数据等fields
 	testCases := []struct {
-		name string
-		input string
+		name   string
+		input  string
 		result int
 		status int
-		err string
+		err    string
 	}{
 		{name: "double of 2", input: "2", result: 4, status: http.StatusOK, err: ""},
 		{name: "double of 3", input: "3", result: 6, status: http.StatusOK, err: ""},
@@ -68,7 +69,7 @@ func TestDoubleNumHandler2(t *testing.T) {
 
 	for _, testCase := range testCases {
 		t.Run(testCase.name, func(t *testing.T) {
-			request, err := http.NewRequest(http.MethodGet, "localhost:9000?v=" + testCase.input, nil)
+			request, err := http.NewRequest(http.MethodGet, "localhost:9000?v="+testCase.input, nil)
 			if err != nil {
 				// Fatalf is equivalent to Logf followed by FailNow.
 				t.Fatalf("cannot create a new request: %v, error: %v", request, err)
@@ -88,13 +89,17 @@ func TestDoubleNumHandler2(t *testing.T) {
 			if err != nil {
 				t.Fatalf("cannot read all from response body, err: %v\n", err)
 			}
-			defer res.Body.Close()
+			defer func() {
+				if err := res.Body.Close(); err != nil {
+					t.Fatalf("cannot close response body")
+				}
+			}()
 
 			trimedResult := strings.TrimSpace(string(resBytes))
 			if res.StatusCode != http.StatusOK {
 				// 用户输入错误，要判定函数的error handling是否是我们想要的结果（对比err字符串）
 				if trimedResult != testCase.err {
-					t.Errorf("received error msg %s, expecte %s\n", trimedResult, testCase.err)
+					t.Errorf("received error msg %s, expect %s\n", trimedResult, testCase.err)
 				}
 				return
 			}

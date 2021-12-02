@@ -10,8 +10,9 @@ import (
 )
 
 func main() {
-	ctx := context.Background()
-	ctx, cancel := context.WithTimeout(ctx, time.Second * 5)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	// TODO：cancel()用于释放与ctx关联的资源。因此cancel()的调用需要放在所有的operations结束之后
+	//  对于本案例，直接放在最后即可。
 	defer cancel()
 
 	// 用新的、发起http request的方法发送请求，目的是让我们能够把context传进去
@@ -20,6 +21,7 @@ func main() {
 		log.Fatalln(err)
 	}
 	request = request.WithContext(ctx)
+
 	response, err := http.DefaultClient.Do(request)
 	if err != nil {
 		log.Fatalln(err)
@@ -30,11 +32,12 @@ func main() {
 	// if err != nil {
 	// 	log.Fatalln(err)
 	// }
-
-	defer response.Body.Close()
 	resBytes, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Printf("%s\n", resBytes)
+	if err := response.Body.Close(); err != nil {
+		log.Fatalln(err)
+	}
 }
