@@ -83,3 +83,8 @@ context主要是用来在协程之间**传递上下文信息**，包括取消信
 #### [14-use-cobra](https://github.com/hliangzhao/LearnGo/tree/main/14-use-cobra)
 
 使用[Cobra](https://github.com/spf13/cobra)构建golang命令行应用程序示例。
+
+
+#### [15-crd-demo](https://github.com/hliangzhao/LearnGo/tree/main/15-crd-demo)
+
+通过CRD机制为Kubernetes集群实现一个自定义资源对象`MyDemo`。
