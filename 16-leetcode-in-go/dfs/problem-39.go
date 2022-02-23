@@ -34,14 +34,19 @@ func GetArr(candidates []int, target int, res []int, sum int) {
 	for _, candidate := range candidates {
 		// 筛选条件：加上新数字之后，大于target的会被筛除
 		sum += candidate
-		if sum <= target {
-			res = append(res, candidate)
-			GetArr(candidates, target, res, sum)
-			res = res[:len(res)-1]
-			sum -= candidate
-		} else {
-			return
-		}
+		// 下面的判断是不需要的
+		// if sum <= target {
+		// 	res = append(res, candidate)
+		// 	GetArr(candidates, target, res, sum)
+		// 	res = res[:len(res)-1]
+		// 	sum -= candidate
+		// } else {
+		// 	return
+		// }
+		res = append(res, candidate)
+		GetArr(candidates, target, res, sum)
+		res = res[:len(res)-1]
+		sum -= candidate
 	}
 }
 
