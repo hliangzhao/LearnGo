@@ -1,8 +1,8 @@
 package main
 
 import (
-	`fmt`
-	`math`
+	"fmt"
+	"math"
 )
 
 type Square struct {
@@ -13,12 +13,10 @@ type Circle struct {
 	radius float64
 }
 
-
 // Shaper 接口命令的规范：以"er"结尾
 type Shaper interface {
 	Area() float64
 }
-
 
 func (s *Square) Area() float64 {
 	return s.side * s.side

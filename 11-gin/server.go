@@ -25,10 +25,10 @@ GET /translate?from=de_ED&to=en_US&text=Hallo
 */
 
 import (
-	`github.com/gin-gonic/gin`
-	`github.com/hliangzhao/LearnGo/11-gin/controllers`
-	`github.com/hliangzhao/LearnGo/11-gin/middlewares`
-	`log`
+	"github.com/gin-gonic/gin"
+	"github.com/hliangzhao/LearnGo/11-gin/controllers"
+	"github.com/hliangzhao/LearnGo/11-gin/middlewares"
+	"log"
 )
 
 func main() {

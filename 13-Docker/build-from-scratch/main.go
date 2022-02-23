@@ -1,8 +1,8 @@
 package main
 
 import (
-	`os`
-	`os/exec`
+	"os"
+	"os/exec"
 )
 
 func myPanic(err error) {

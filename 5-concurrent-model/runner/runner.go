@@ -1,10 +1,10 @@
 package runner
 
 import (
-	`errors`
-	`os`
-	`os/signal`
-	`time`
+	"errors"
+	"os"
+	"os/signal"
+	"time"
 )
 
 var (

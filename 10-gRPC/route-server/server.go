@@ -1,19 +1,19 @@
 package main
 
 import (
-	`context`
-	`errors`
-	`google.golang.org/protobuf/proto`
-	`io`
-	`math`
-	`time`
+	"context"
+	"errors"
+	"google.golang.org/protobuf/proto"
+	"io"
+	"math"
+	"time"
 
 	// 注意，go.mod里面本module定义为github.com/hliangzhao/LearnGo/10-gRPC，
 	// 因此本module中的package route自然就是github.com/hliangzhao/LearnGo/10-gRP/route
-	pb `github.com/hliangzhao/LearnGo/10-gRPC/route`
-	`google.golang.org/grpc`
-	`log`
-	`net`
+	pb "github.com/hliangzhao/LearnGo/10-gRPC/route"
+	"google.golang.org/grpc"
+	"log"
+	"net"
 )
 
 /*

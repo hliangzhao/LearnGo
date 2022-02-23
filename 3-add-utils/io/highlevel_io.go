@@ -1,15 +1,15 @@
 package main
 
 import (
-	`bufio`
-	`compress/gzip`
-	`fmt`
-	`io`
-	`io/ioutil`
-	`log`
-	`os`
-	`strconv`
-	`strings`
+	"bufio"
+	"compress/gzip"
+	"fmt"
+	"io"
+	"io/ioutil"
+	"log"
+	"os"
+	"strconv"
+	"strings"
 )
 
 /* 调用ioutil提供的高级API接口 */
@@ -31,7 +31,7 @@ func CopyFile(srcFilename, dstFilename string) {
 
 type Page struct {
 	Title string
-	Body []byte
+	Body  []byte
 }
 
 func (p *Page) save() (err error) {
@@ -90,10 +90,9 @@ func ReadZipFile(filename string) {
 	}
 }
 
-
 type Product struct {
-	Title string
-	Price float64
+	Title    string
+	Price    float64
 	Quantity int
 }
 
@@ -113,7 +112,7 @@ func ParseProducts(filename string) []Product {
 	inputReader := bufio.NewReader(inputFileHandle)
 	for {
 		inStr, readerErr := inputReader.ReadString('\n')
-		inStr = inStr[:len(inStr) - 1]
+		inStr = inStr[:len(inStr)-1]
 		inArr := strings.Split(inStr, ";")
 		price, _ := strconv.ParseFloat(inArr[1], 64)
 		quantity, _ := strconv.Atoi(inArr[2])

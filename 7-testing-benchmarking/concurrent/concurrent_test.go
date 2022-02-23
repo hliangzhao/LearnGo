@@ -1,8 +1,8 @@
 package main
 
 import (
-	`fmt`
-	`testing`
+	"fmt"
+	"testing"
 )
 
 // BenchmarkMyConcurrentAtomicAdd 基准测试主要测试函数的运行时长
@@ -11,7 +11,7 @@ func BenchmarkMyConcurrentAtomicAdd(b *testing.B) {
 	b.ResetTimer()
 	fmt.Println(b.N)
 	// 运行N次取平均值
-	for i:= 0; i < b.N; i++ {
+	for i := 0; i < b.N; i++ {
 		MyConcurrentAtomicAdd()
 	}
 }

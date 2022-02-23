@@ -1,11 +1,11 @@
 package main
 
-import `fmt`
+import "fmt"
 
 func main() {
 	/* 数组array */
-	arr := [5]string{"ok", "asd", "123", "f", "12321"}          // 指定数组大小
-	arr2 := [...]string{"12321", "yes", "dsf"}                  // 编译器自行计算长度
+	arr := [5]string{"ok", "asd", "123", "f", "12321"} // 指定数组大小
+	arr2 := [...]string{"12321", "yes", "dsf"}         // 编译器自行计算长度
 
 	for idx, value := range arr {
 		fmt.Println(idx, value)
@@ -20,9 +20,6 @@ func main() {
 	arr3[0] = "abc"
 	fmt.Println("arr:", arr, ", arr3:", arr3)
 
-
-
-
 	/* 切片slice */
 	// 切片由一个首地址指针和两个表示长度和容量的整数组成
 	// 切片是不指定大小的，是一种"动态数组"，可按需自动增长和缩小
@@ -32,8 +29,8 @@ func main() {
 	// TODO：使用make来创建数据类型（slice, map, channel）
 	s2 := make([]int, 2, 2)
 	fmt.Println(len(s2), cap(s2))
-	s2 = append(s2, 1)                  // slice可以append
-	fmt.Println(s2, len(s2), cap(s2))           // 容量自动翻倍，无需用户操心
+	s2 = append(s2, 1)                // slice可以append
+	fmt.Println(s2, len(s2), cap(s2)) // 容量自动翻倍，无需用户操心
 
 	ModifySlice(s2) // "传址"
 	fmt.Println(s2)
@@ -54,13 +51,10 @@ func main() {
 	multiSlice[0][1] = 20
 	fmt.Println(multiSlice)
 
-
-
-
 	/* 映射map */
-	m := map[string]int {
-		"Julia":90,
-		"Mike": 100,
+	m := map[string]int{
+		"Julia": 90,
+		"Mike":  100,
 	}
 	// 若键不存在，则值为value类型的默认值（此处是0）
 	fmt.Println(m["abc"], m["dfd"], len(m))

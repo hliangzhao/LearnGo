@@ -1,9 +1,9 @@
-package main        // 入口
+package main // 入口
 
 import (
 	"fmt"
-	`github.com/hliangzhao/LearnGo/1-get-bilibili/downloader`
-	myfmt "github.com/hliangzhao/LearnGo/1-get-bilibili/fmt"        // 导入自定义包，使用别名
+	"github.com/hliangzhao/LearnGo/1-get-bilibili/downloader"
+	myfmt "github.com/hliangzhao/LearnGo/1-get-bilibili/fmt" // 导入自定义包，使用别名
 )
 
 func main() {
@@ -11,7 +11,8 @@ func main() {
 	myfmt.Logger.Println("hello")
 
 	request := downloader.InfoRequest{Bvids: []string{"BV1Ff4y187q9", "BV1DV411s7ij"}}
-	response, err := downloader.BatchDownloadVideoInfo(request); if err != nil {
+	response, err := downloader.BatchDownloadVideoInfo(request)
+	if err != nil {
 		panic(err)
 	}
 

@@ -1,11 +1,11 @@
 package main
 
 import (
-	`fmt`
-	`math/rand`
-	`sync`
-	`sync/atomic`
-	`time`
+	"fmt"
+	"math/rand"
+	"sync"
+	"sync/atomic"
+	"time"
 )
 
 /* 协程是Go语言中实现并发的一种方式。协程之间传递信息和同步的渠道是channel。*/

@@ -1,11 +1,10 @@
 package main
 
 import (
-	`errors`
-	`fmt`
-	`math`
+	"errors"
+	"fmt"
+	"math"
 )
-
 
 // Sqrt 在返回值处指定返回的变量分别为ret和err
 func Sqrt(f float64) (ret float64, err error) {
@@ -19,10 +18,9 @@ func Sqrt(f float64) (ret float64, err error) {
 	return
 }
 
-
 /* 返回一个函数的函数，被称为"闭包" */
 
-func Compose(f, g func(x float64) float64) func (x float64) float64 {
+func Compose(f, g func(x float64) float64) func(x float64) float64 {
 	return func(x float64) float64 {
 		return f(g(x))
 	}
@@ -39,7 +37,7 @@ func scale(x float64) float64 {
 func TestCompose() {
 	compose := Compose(increment, scale)
 	compose2 := func(x float64) float64 {
-		return 2 * x + 1
+		return 2*x + 1
 	}
 	fmt.Println(compose(2), compose2(2))
 }
@@ -48,7 +46,7 @@ func Fib() func() int {
 	// TODO：a和b的状态会被内部的函数记住
 	a, b := 1, 1
 	return func() int {
-		a, b = b, a + b
+		a, b = b, a+b
 		return b
 	}
 }

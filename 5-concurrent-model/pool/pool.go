@@ -1,10 +1,10 @@
 package pool
 
 import (
-	`errors`
-	`fmt`
-	`io`
-	`sync`
+	"errors"
+	"fmt"
+	"io"
+	"sync"
 )
 
 var (

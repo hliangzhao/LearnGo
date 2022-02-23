@@ -1,10 +1,10 @@
 package main
 
-import `fmt`
+import "fmt"
 
 // Enlarge 将输入的切片变大factor倍
 func Enlarge(s []int, factor int) []int {
-	ns := make([]int, len(s) * factor)
+	ns := make([]int, len(s)*factor)
 	copy(ns, s)
 	// 让s指向ns
 	s = ns
@@ -13,7 +13,7 @@ func Enlarge(s []int, factor int) []int {
 
 // RemoveSeg 从输入的切片中移除[start, end)的段落
 func RemoveSeg(s []string, start, end int) []string {
-	ret := make([]string, len(s) - (end - start))
+	ret := make([]string, len(s)-(end-start))
 	at := copy(ret, s[:start])
 	copy(ret[at:], s[end:])
 	return ret

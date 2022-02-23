@@ -1,12 +1,12 @@
 package main
 
 import (
-	`bufio`
-	`flag`
-	`fmt`
-	`io`
-	`os`
-	`strings`
+	"bufio"
+	"flag"
+	"fmt"
+	"io"
+	"os"
+	"strings"
 )
 
 /* 读取命令行参数 */
@@ -21,12 +21,12 @@ func ReadFromArgs() {
 	fmt.Println(who)
 }
 
-
 /* 使用并识别flag */
 
 var NewLine = flag.Bool("n", false, "print newline")
+
 const (
-	Space = " "
+	Space   = " "
 	Newline = "\n"
 )
 
@@ -61,7 +61,6 @@ func UseFlag() {
 		os.Exit(1)
 	}
 }
-
 
 // CatWithFlag 如果没有参数，则echo输入的内容；如果有参数，则解析为文件名，将文件中的内容打印到标准输出
 func CatWithFlag() {

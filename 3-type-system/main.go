@@ -1,6 +1,6 @@
 package main
 
-import `fmt`
+import "fmt"
 
 // 内置类型（basic types）
 // bool, string, int (int8, int16, int32, int64), uint, uintptr, uint8, ...
@@ -14,10 +14,7 @@ import `fmt`
 //  程序在运行的时候无法获知其占用的内存空间范围。只能通过头指针来获取其访问位置。
 // slice, map, channel, interface, func
 
-
 // 类型、结构体的"大小写"决定了是否包外可见
-
-
 
 // 使用接口
 
@@ -32,18 +29,16 @@ func sendNotification(n notifier) {
 	n.notify()
 }
 
-
-
 // 使用结构体
 
 type User struct {
 	// fields
-	name string
+	name  string
 	email string
 }
 
 // 使用"值接受者"，调用时使用这个值的"副本"来执行。显然，这不如指针接收者高效！
-func (u User) notify()  {
+func (u User) notify() {
 	fmt.Printf("user %s notified\n", u.name)
 }
 
@@ -62,9 +57,8 @@ func (u User) changeName2(name string) {
 	u.name = name
 }
 
-
 type Admin struct {
-	name string
+	name  string
 	email string
 	admin bool
 }
@@ -73,8 +67,6 @@ type Admin struct {
 func (a *Admin) notify() {
 	fmt.Printf("admin %s notified\n", a.name)
 }
-
-
 
 // 结构体的嵌套
 
@@ -91,7 +83,7 @@ func main() {
 	a := Admin{name: "Mike", email: "mike@google.com", admin: true}
 
 	sendNotification(u)
-	sendNotification(&a)            // 注意这里实现了notifier接口的形式是"指针接收者"，因此调用的时候要传递指针
+	sendNotification(&a) // 注意这里实现了notifier接口的形式是"指针接收者"，因此调用的时候要传递指针
 
 	e := Employee{level: 0, a: Admin{
 		name:  "Peter",

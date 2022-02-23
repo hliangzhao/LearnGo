@@ -1,10 +1,10 @@
 package main
 
 import (
-	`fmt`
-	`log`
-	`reflect`
-	`strconv`
+	"fmt"
+	"log"
+	"reflect"
+	"strconv"
 )
 
 /* 运用struct和数组实现一个栈 */
@@ -12,7 +12,7 @@ import (
 const StackSize = 10000
 
 type Stack struct {
-	idx int                     // 第一个空位置的地址
+	idx  int // 第一个空位置的地址
 	data [StackSize]float64
 }
 
@@ -24,18 +24,17 @@ func (s *Stack) Push(value float64) {
 	s.idx++
 }
 
-
 func (s *Stack) Pop() float64 {
 	s.idx--
 	return s.data[s.idx]
 }
 
 func (s *Stack) Top() float64 {
-	return s.data[s.idx - 1]
+	return s.data[s.idx-1]
 }
 
 func (s *Stack) Peek() float64 {
-	return s.data[s.idx - 1]
+	return s.data[s.idx-1]
 }
 
 func (s *Stack) String() string {
@@ -47,15 +46,15 @@ func (s *Stack) String() string {
 }
 
 func TestStack() {
-	s := Stack{}                 // 结构体变量实例
+	s := Stack{} // 结构体变量实例
 	for i := 0; i < 10; i++ {
 		s.Push(float64(i))
 	}
 	fmt.Println(reflect.TypeOf(s), &s)
 
 	// TODO：s是实例，sAddr是实例的指针，但是s.Push()和sAddr.Push都是合法的，因为runtime会自动为我们解址
-	sAddr := new(Stack)          // 结构体变量指针
-	sAddr2 := &Stack{}           // 底层仍然会调用new()
+	sAddr := new(Stack) // 结构体变量指针
+	sAddr2 := &Stack{}  // 底层仍然会调用new()
 	for i := 0; i < 10; i++ {
 		sAddr.Push(float64(i))
 	}

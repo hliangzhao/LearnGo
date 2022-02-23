@@ -1,13 +1,13 @@
 package main
 
 import (
-	`bufio`
-	`fmt`
-	`io`
-	`log`
-	`os`
-	`strconv`
-	`strings`
+	"bufio"
+	"fmt"
+	"io"
+	"log"
+	"os"
+	"strconv"
+	"strings"
 )
 
 /* 从标准输入中读取数据到缓冲区：示例1 */

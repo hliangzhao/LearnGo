@@ -2,7 +2,7 @@ package main
 
 import (
 	bili "github.com/JimmyZhangJW/biliStreamClient"
-	`log`
+	"log"
 )
 
 func main() {

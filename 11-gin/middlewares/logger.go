@@ -1,8 +1,8 @@
 package middlewares
 
 import (
-	`fmt`
-	`github.com/gin-gonic/gin`
+	"fmt"
+	"github.com/gin-gonic/gin"
 )
 
 func MyLogger() gin.HandlerFunc {

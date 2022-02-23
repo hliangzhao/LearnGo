@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	`github.com/gin-gonic/gin`
-	`github.com/hliangzhao/LearnGo/11-gin/models`
-	`sync`
+	"github.com/gin-gonic/gin"
+	"github.com/hliangzhao/LearnGo/11-gin/models"
+	"sync"
 )
 
 // VideoController 给外界开放的是名为VideoController的接口，内部返回具体实现：&controller{}
@@ -20,7 +20,7 @@ func NewVideoController() VideoController {
 
 type generator struct {
 	counter int
-	mtx sync.Mutex              // 加锁是因为考虑到了web站点的并发访问性
+	mtx     sync.Mutex // 加锁是因为考虑到了web站点的并发访问性
 }
 
 func (g *generator) getNextId() int {
@@ -33,7 +33,7 @@ func (g *generator) getNextId() int {
 // 创建全局的id生成器
 var g = &generator{}
 
-type controller struct{
+type controller struct {
 	videos []models.Video
 }
 
@@ -85,11 +85,10 @@ func (c *controller) Delete(ctx *gin.Context) {
 	for idx, video := range c.videos {
 		if video.Id == videoToDelete.Id {
 			// slice的操作并不是thread safe的，并发场景时要进行同步
-			c.videos = append(c.videos[0: idx], c.videos[idx + 1: len(c.videos)]...)
+			c.videos = append(c.videos[0:idx], c.videos[idx+1:len(c.videos)]...)
 			ctx.String(200, "success, video with id %d has been deleted", videoToDelete.Id)
 			return
 		}
 	}
 	ctx.String(400, "bad request, cannot delete video with %d to update", videoToDelete.Id)
 }
-

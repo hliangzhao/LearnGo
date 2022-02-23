@@ -1,9 +1,9 @@
 package downloader
 
 import (
-	`encoding/json`
-	`io/ioutil`
-	`net/http`
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
 )
 
 // InfoRequest 自定义结构体，存放要查询的bvid
@@ -13,10 +13,10 @@ type InfoRequest struct {
 
 type VideInfo struct {
 	Code int `json:"code"`
-	Data struct{
-		Bvid string `json:"bvid"`               // 使用tag
+	Data struct {
+		Bvid  string `json:"bvid"` // 使用tag
 		Title string `json:"title"`
-		Desc string `json:"desc"`
+		Desc  string `json:"desc"`
 	} `json:"data"`
 }
 

@@ -1,16 +1,16 @@
 package main
 
 import (
-	`fmt`
-	`github.com/hliangzhao/LearnGo/5-concurrent-model/pool`
-	`github.com/hliangzhao/LearnGo/5-concurrent-model/runner`
-	`io`
-	`log`
-	`math/rand`
-	`strconv`
-	`sync`
-	`sync/atomic`
-	`time`
+	"fmt"
+	"github.com/hliangzhao/LearnGo/5-concurrent-model/pool"
+	"github.com/hliangzhao/LearnGo/5-concurrent-model/runner"
+	"io"
+	"log"
+	"math/rand"
+	"strconv"
+	"sync"
+	"sync/atomic"
+	"time"
 )
 
 /*

@@ -1,15 +1,15 @@
 package main
 
 import (
-	`bufio`
-	`context`
-	`fmt`
-	pb `github.com/hliangzhao/LearnGo/10-gRPC/route`
-	`google.golang.org/grpc`
-	`io`
-	`log`
-	`os`
-	`time`
+	"bufio"
+	"context"
+	"fmt"
+	pb "github.com/hliangzhao/LearnGo/10-gRPC/route"
+	"google.golang.org/grpc"
+	"io"
+	"log"
+	"os"
+	"time"
 )
 
 /*
@@ -35,7 +35,7 @@ func testListFeatures(client pb.RouteGuideClient) {
 			Longitude: 120084879,
 		},
 		Hi: &pb.Point{
-			Latitude: 30238665,
+			Latitude:  30238665,
 			Longitude: 120144978,
 		},
 	})
@@ -59,15 +59,15 @@ func testListFeatures(client pb.RouteGuideClient) {
 func testRecordRoute(client pb.RouteGuideClient) {
 	points := []*pb.Point{
 		{
-			Latitude: 30306202,
+			Latitude:  30306202,
 			Longitude: 120084879,
 		},
 		{
-			Latitude: 30268839,
+			Latitude:  30268839,
 			Longitude: 120063346,
 		},
 		{
-			Latitude: 30238665,
+			Latitude:  30238665,
 			Longitude: 120144978,
 		},
 	}
@@ -116,7 +116,6 @@ func testRecommend(client pb.RouteGuideClient) {
 	}()
 
 	reader := bufio.NewReader(os.Stdin)
-
 
 	for {
 		// 这里request的Point需要分配空间，否则为nil会报错

@@ -1,16 +1,16 @@
 package main
 
 import (
-	`fmt`
-	`strconv`
+	"fmt"
+	"strconv"
 )
 
 /* 实现golang版本的工厂模式 */
 
 type Car struct {
-	Model string
+	Model       string
 	Manufacture string
-	BuildYear int
+	BuildYear   int
 }
 
 // Cars Car实例指针组成的切片
