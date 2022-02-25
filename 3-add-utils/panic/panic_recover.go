@@ -21,7 +21,7 @@ func (e *ParseErr) String() string {
 }
 
 func Parse(in string) (numbers []int, err error) {
-	// 捕获error的匿名函数总是会在Parse结束的时候被执行。如果没有错误，则正常推出，否则解析error
+	// 捕获error的匿名函数总是会在Parse结束的时候被执行。如果没有错误，则正常退出，否则解析error
 	defer func() {
 		if r := recover(); r != nil {
 			var ok bool
